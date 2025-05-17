@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Hello World Simple App</title>
+</head>
+<body>
+<div>
+    <form action="/rain" method="get">
+        <button onclick="loadWeather()">Lade Wetterdaten</button>
+    </form>
+</div>
+
+
+<script>
+    async function loadWeather() {
+        try {
+            const res = await fetch('/top10');
+            const data = await res.json();
+
+            const list = document.getElementById('weather-list');
+            list.innerHTML = ''; // vorherige Einträge löschen
+
+            data.forEach((value, index) => {
+                const li = document.createElement('li');
+                li.textContent = `Stunde ${index + 1}: ${value} mm Regen`;
+                list.appendChild(li);
+            });
+        } catch (err) {
+            alert('Fehler beim Abrufen der Wetterdaten');
+            console.error(err);
+        }
+    }
+</script>
+</body>
+</html>
